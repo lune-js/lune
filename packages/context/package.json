@@ -1,6 +1,6 @@
 {
   "name": "@lune-js/context",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Optimized context library to manage state and behavior in Lune.js",
   "bugs": {
     "url": "https://github.com/AGS1130/lune-js/issues"
@@ -41,8 +41,8 @@
     "clean": "rm -rf dist node_modules"
   },
   "dependencies": {
-    "@lune-js/core": "0.1.2",
-    "@lune-js/utils": "0.1.2"
+    "@lune-js/core": "0.2.0",
+    "@lune-js/utils": "0.2.0"
   },
   "devDependencies": {
     "tsdown": "0.22.14",
