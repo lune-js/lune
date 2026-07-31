@@ -1,5 +1,15 @@
 # @lune-js/context
 
+## [0.2.0] - 2026-07-31
+
+### Added
+
+- Better browser and bundler support; adds types for attributes in JSX.
+
+### Fixed
+
+- Updates es-toolkit to latest.
+
 ## [0.1.2] - 2026-07-24
 
 ### Fixed
