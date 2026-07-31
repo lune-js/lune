@@ -1,8 +1,8 @@
 import { Block, evaluate } from "@lune-js/context";
 import type { Context } from "@lune-js/context";
 import { warn } from "@lune-js/utils";
-import { checkAttr } from "./utils";
-import { walk } from "./walk";
+import { walk } from ".";
+import { checkAttr } from "../utils";
 
 interface Branch {
   exp?: string | null;

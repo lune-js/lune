@@ -6,8 +6,6 @@ import { walk } from "./directives";
 import type { App, Plugin } from "./types";
 import { toDisplayString } from "./utils";
 
-export type { App, Attributes, Plugin } from "./types";
-
 const escapeRegex = (str: string): string => str.replace(/[-.*+?^${}()|[\]/\\]/g, "\\$&");
 const installedPlugins = new WeakSet();
 
@@ -113,5 +111,17 @@ export const createApp = (initialData?: any): App => {
   };
 };
 
+/**
+ * Automatically mounts the application if the current script tag has an `init` attribute.
+ */
+export const autoMount = (): void => {
+  const s = document.currentScript;
+  if (s?.hasAttribute("init")) {
+    createApp().mount();
+  }
+};
+
 export { effect, reactive, readonly, shallowReactive, shallowReadonly } from "@lune-js/core";
 export { nextTick } from "@lune-js/context";
+
+autoMount();

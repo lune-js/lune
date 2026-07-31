@@ -1,6 +1,7 @@
 import { createScopedContext, evaluate, setInOnce } from "@lune-js/context";
 import type { Context, Directive } from "@lune-js/context";
 import { error } from "@lune-js/utils";
+import { checkAttr } from "../utils";
 import { bind } from "./bind";
 import { effect } from "./effect";
 import { _for } from "./for";
@@ -11,7 +12,6 @@ import { on } from "./on";
 import { ref } from "./ref";
 import { show } from "./show";
 import { text } from "./text";
-import { checkAttr } from "./utils";
 
 export const builtInDirectives = {
   bind,

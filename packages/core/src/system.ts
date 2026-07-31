@@ -204,7 +204,7 @@ export function startTracking(sub: ReactiveNode): ReactiveNode | undefined {
 
 export function endTracking(sub: ReactiveNode, prevSub: ReactiveNode | undefined): void {
   if (import.meta.env.DEV && activeSub !== sub) {
-    warn("Active effect was not restored correctly - " + "this is likely a Vue internal bug.");
+    warn("Active effect was not restored correctly - this is likely a Lune.js internal bug.");
   }
   activeSub = prevSub;
 

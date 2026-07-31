@@ -1,7 +1,7 @@
 import { nextTick } from "@lune-js/context";
 import type { Directive } from "@lune-js/context";
 import { error, kebabCase } from "@lune-js/utils";
-import { listen } from "./utils";
+import { listen } from "../utils";
 
 // same as vue 2
 const simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;

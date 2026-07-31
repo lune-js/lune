@@ -1,5 +1,5 @@
 import type { Directive } from "@lune-js/context";
-import { toDisplayString } from "./utils";
+import { toDisplayString } from "../utils";
 
 /**
  * Updates basic string layouts cleanly inside DOM nodes (`lu-text`).

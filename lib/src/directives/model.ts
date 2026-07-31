@@ -1,6 +1,6 @@
 import type { Directive } from "@lune-js/context";
 import { isArray, toNumber } from "@lune-js/utils";
-import { listen, looseEqual, looseIndexOf } from "./utils";
+import { listen, looseEqual, looseIndexOf } from "../utils";
 
 // Consolidated value handling utilities
 export function createValueHandler(resolveValue: (val: string) => any) {

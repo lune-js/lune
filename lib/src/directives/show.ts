@@ -1,5 +1,5 @@
 import type { Directive } from "@lune-js/context";
-import { getElementMetadata } from "./utils";
+import { getElementMetadata } from "../utils";
 
 /**
  * Toggles element visibility via CSS style variations (`lu-show`).

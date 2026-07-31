@@ -1,6 +1,6 @@
 import type { Directive } from "@lune-js/context";
 import { camelCase, isArray, isObject, isString, kebabCase } from "@lune-js/utils";
-import { getElementMetadata, normalizeClass, normalizeStyle } from "./utils";
+import { getElementMetadata, normalizeClass, normalizeStyle } from "../utils";
 
 // Properties that should be set as attributes for consistency
 const DOM_ATTR_PROPS = new Set(["id", "title", "lang", "dir"]);

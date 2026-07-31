@@ -1,7 +1,7 @@
 import { Block, createScopedContext, evaluate } from "@lune-js/context";
 import type { Context } from "@lune-js/context";
 import { isArray, isObject, warn } from "@lune-js/utils";
-import { walk } from "./walk";
+import { walk } from ".";
 
 const forAliasRE = /([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/;
 const forIteratorRE = /,([^,}\]]*)(?:,([^,}\]]*))?$/;
