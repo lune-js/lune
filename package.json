@@ -16,8 +16,7 @@
     "fresh": "bun clean && bun install",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "postinstall": "husky install",
-    "prepare": "husky",
+    "postinstall": "lefthook install",
     "changeset": "changeset",
     "version": "changeset version && bun update && node .changeset/postprocess-changelogs.cjs",
     "release": "changeset publish"
@@ -26,17 +25,12 @@
     "@changesets/cli": "2.31.1",
     "@happy-dom/global-registrator": "20.11.1",
     "@types/bun": "1.3.14",
-    "husky": "9.1.7",
-    "nano-staged": "1.0.2",
+    "lefthook": "2.1.10",
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
     "typescript": "7.0.2",
     "vite": "8.2.0"
-  },
-  "nano-staged": {
-    "*": "oxfmt --no-error-on-unmatched-pattern",
-    "*.{js,ts}": "bun lint"
   },
   "packageManager": "bun@1.3.14"
 }
