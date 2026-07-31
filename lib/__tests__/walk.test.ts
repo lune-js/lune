@@ -1,8 +1,8 @@
 // oxlint-disable
 import { describe, it, expect, beforeEach, vi } from "bun:test";
 import { createContext, nextTick } from "@lune-js/context";
-import { _if } from "../src/if";
-import { walk } from "../src/walk";
+import { walk } from "../src/directives";
+import { _if } from "../src/directives/if";
 
 describe("walk", () => {
   let container: HTMLElement;

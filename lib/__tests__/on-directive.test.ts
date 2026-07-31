@@ -2,7 +2,7 @@
 import { describe, it, expect, beforeEach, vi } from "bun:test";
 import { createContext, evaluate, nextTick } from "@lune-js/context";
 import { effect } from "../src";
-import { on } from "../src/on";
+import { on } from "../src/directives/on";
 
 describe("on", () => {
   let container: HTMLElement;

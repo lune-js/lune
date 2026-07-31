@@ -89,8 +89,8 @@ describe("app", () => {
       // Spy on console.warn to check if mount warning is logged
       const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-      // Import index module
-      const { autoMount } = await import("../src/index");
+      // Import browser module
+      const { autoMount } = await import("../src/browser");
 
       // Call autoMount
       autoMount();
@@ -118,8 +118,8 @@ describe("app", () => {
       // Spy on console.warn to check if mount warning is logged
       const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
-      // Import index module
-      const { autoMount } = await import("../src/index");
+      // Import browser module
+      const { autoMount } = await import("../src/browser");
 
       // Call autoMount
       autoMount();

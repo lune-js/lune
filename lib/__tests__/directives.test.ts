@@ -1,6 +1,7 @@
 // oxlint-disable
 import { describe, it, expect, beforeEach, afterEach, vi } from "bun:test";
 import { createApp, nextTick, reactive } from "../src";
+import { builtInDirectives } from "../src/directives";
 import {
   createValueHandler,
   onCompositionEnd,
@@ -8,8 +9,7 @@ import {
   handleCheckboxChange,
   updateCheckboxValue,
   handleRadioChange
-} from "../src/model";
-import { builtInDirectives } from "../src/walk";
+} from "../src/directives/model";
 
 describe("directives", () => {
   let container: HTMLElement;
