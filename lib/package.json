@@ -49,9 +49,9 @@
     "@lune-js/utils": "0.1.2"
   },
   "devDependencies": {
-    "tsdown": "0.22.13",
+    "tsdown": "0.22.14",
     "typescript": "7.0.2",
-    "vite": "8.1.5"
+    "vite": "8.2.0"
   },
   "engines": {
     "node": "^14.18.0 || >=16.10.0"
