@@ -1,13 +1,13 @@
 import type { Directive } from "@lune-js/context";
 import type { Block } from "@lune-js/context";
 
-export interface App {
+export interface App<HostElement = Element> {
   /** Registers a directive. */
-  directive(name: string, def?: Directive): Directive | undefined | App;
+  directive(name: string, def?: Directive<any>): Directive | undefined | this;
   /** Installs a plugin. */
-  use(plugin: Plugin, options?: any): App;
+  use(plugin: Plugin, options?: any): this;
   /** Mounts the application to the DOM. */
-  mount(el?: string | Element | null): App | undefined;
+  mount(el?: string | HostElement | null): this | undefined;
   /** Unmounts the application. */
   unmount(): void;
   /** The root blocks of the mounted application. */

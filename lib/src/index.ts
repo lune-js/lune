@@ -6,6 +6,7 @@ import { walk } from "./directives";
 import type { App, Plugin } from "./types";
 import { toDisplayString } from "./utils";
 
+export type { Directive } from "@lune-js/context";
 export type { App, Attributes, Plugin } from "./types";
 
 const escapeRegex = (str: string): string => str.replace(/[-.*+?^${}()|[\]/\\]/g, "\\$&");
@@ -18,7 +19,7 @@ const installedPlugins = new WeakSet();
  * @param initialData - Optional structure initializing base states, bindings, or override parameters.
  * @returns A pristine application container instance complete with lifecycle controls.
  */
-export const createApp = (initialData?: any): App => {
+export const createApp = <HostElement extends Element = Element>(initialData?: any): App<HostElement> => {
   // root context
   const ctx = createContext();
   if (initialData) {
@@ -40,7 +41,7 @@ export const createApp = (initialData?: any): App => {
   let rootBlocks: Block[];
 
   return {
-    directive(name: string, def?: Directive) {
+    directive(name: string, def?: Directive<any>) {
       if (def) {
         ctx.dirs[name] = def;
         return this;
@@ -49,26 +50,27 @@ export const createApp = (initialData?: any): App => {
       return ctx.dirs[name];
     },
 
-    mount(el?: string | Element | null) {
+    mount(el?: string | HostElement | null) {
+      let $el: HostElement | HTMLElement | null = null;
+
       if (typeof el === "string") {
-        const selector = el;
-        el = document.querySelector(el);
-        if (!el) {
-          if (import.meta.env.DEV) error(`selector ${selector} has no matching element.`);
+        $el = document.querySelector(el);
+        if (!$el) {
+          if (import.meta.env.DEV) error(`selector ${el} has no matching element.`);
           return;
         }
       }
 
-      el = el ?? document.documentElement;
+      $el = $el ?? document.documentElement;
       let roots: Element[];
-      if (el.hasAttribute("lu-scope")) {
-        roots = [el];
+      if ($el.hasAttribute("lu-scope")) {
+        roots = [$el];
       } else {
-        roots = [...el.querySelectorAll(`[lu-scope]`)].filter((root) => !root.matches(`[lu-scope] [lu-scope]`));
+        roots = [...$el.querySelectorAll(`[lu-scope]`)].filter((root) => !root.matches(`[lu-scope] [lu-scope]`));
       }
 
       if (!roots.length) {
-        roots = [el];
+        roots = [$el];
       }
 
       if (import.meta.env.DEV && roots.length === 1 && roots[0] === document.documentElement) {
