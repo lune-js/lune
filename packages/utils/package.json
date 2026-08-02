@@ -3,13 +3,13 @@
   "version": "0.2.0",
   "description": "Lower level utilities to build Lune.js",
   "bugs": {
-    "url": "https://github.com/AGS1130/lune-js/issues"
+    "url": "https://github.com/lune-js/lune/issues"
   },
   "license": "MIT",
   "author": "Gregory Salinas <ags1130@yahoo.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AGS1130/lune-js.git",
+    "url": "git+https://github.com/lune-js/lune.git",
     "directory": "packages/utils"
   },
   "files": [
