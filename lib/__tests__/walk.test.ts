@@ -4,6 +4,8 @@ import { createContext, nextTick } from "@lune-js/context";
 import { walk } from "../src/directives";
 import { _if } from "../src/directives/if";
 
+const isDev = import.meta.env.DEV;
+
 describe("walk", () => {
   let container: HTMLElement;
   let ctx: any;
@@ -82,7 +84,7 @@ describe("walk", () => {
     expect(container.innerHTML).not.toContain("C");
   });
 
-  it("should warn for empty lu-if in DEV", () => {
+  it.skipIf(!isDev)("should warn for empty lu-if in DEV", () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     const originalDEV = (globalThis as any).import?.meta?.env?.DEV;
     (globalThis as any).import = { meta: { env: { DEV: true } } };
@@ -188,7 +190,7 @@ describe("walk", () => {
     expect(items[1]?.textContent).toBe("Jane (25)");
   });
 
-  it("should warn for invalid lu-for in DEV", () => {
+  it.skipIf(!isDev)("should warn for invalid lu-for in DEV", () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     const originalDEV = (globalThis as any).import?.meta?.env?.DEV;
     (globalThis as any).import = { meta: { env: { DEV: true } } };
@@ -295,7 +297,7 @@ describe("walk", () => {
     expect(div?.textContent).toBe("Hello");
   });
 
-  it("should handle unknown custom directive in DEV", () => {
+  it.skipIf(!isDev)("should handle unknown custom directive in DEV", () => {
     const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const originalDEV = (globalThis as any).import?.meta?.env?.DEV;
     (globalThis as any).import = { meta: { env: { DEV: true } } };
@@ -402,7 +404,7 @@ describe("walk", () => {
     expect(mockDirective).toHaveBeenCalled();
   });
 
-  it("should handle :ref shorthand", () => {
+  it.skipIf(!isDev)("should handle :ref shorthand", () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     container.innerHTML = '<div :ref="myRef"></div>';
 
@@ -432,7 +434,7 @@ describe("walk", () => {
     expect(div.textContent).toBe("Fragment content");
   });
 
-  it("should warn for invalid template selector in DEV", () => {
+  it.skipIf(!isDev)("should warn for invalid template selector in DEV", () => {
     const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const originalDEV = (globalThis as any).import?.meta?.env?.DEV;
     (globalThis as any).import = { meta: { env: { DEV: true } } };

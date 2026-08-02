@@ -11,6 +11,8 @@ import {
   handleRadioChange
 } from "../src/directives/model";
 
+const isDev = import.meta.env.DEV;
+
 describe("directives", () => {
   let container: HTMLElement;
 
@@ -1005,7 +1007,7 @@ describe("directives", () => {
   });
 
   describe("lu-ref", () => {
-    it("should register element in $refs", () => {
+    it.skipIf(!isDev)("should register element in $refs", () => {
       const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       container.innerHTML = '<div lu-ref="myRef"></div>';
 
@@ -1056,7 +1058,7 @@ describe("directives", () => {
       expect(app.scope.$refs.secondRef).toBe(element);
     });
 
-    it("should cleanup ref on unmount", () => {
+    it.skipIf(!isDev)("should cleanup ref on unmount", () => {
       const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       container.innerHTML = '<div lu-ref="myRef"></div>';
 

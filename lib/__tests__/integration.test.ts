@@ -2,6 +2,8 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from "bun:test";
 import { createApp, nextTick, reactive } from "../src";
 
+const isDev = import.meta.env.DEV;
+
 describe("integration tests", () => {
   let container: HTMLElement;
 
@@ -226,7 +228,7 @@ describe("integration tests", () => {
   });
 
   describe("error handling", () => {
-    it("should handle undefined expressions gracefully", () => {
+    it.skipIf(!isDev)("should handle undefined expressions gracefully", () => {
       const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       container.innerHTML = "<div>{{ undefinedVar }}</div>";
 

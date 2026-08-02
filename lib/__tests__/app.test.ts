@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "bun:test";
 import { createApp } from "../src";
 
+const isDev = import.meta.env.DEV;
+
 describe("app", () => {
   let container: HTMLElement;
   let originalCurrentScript: HTMLOrSVGScriptElement | null;
@@ -74,7 +76,7 @@ describe("app", () => {
       expect(indexExports.effect).toBeDefined();
     });
 
-    it("should not auto-mount when script has no init attribute", async () => {
+    it.skipIf(!isDev)("should not auto-mount when script has no init attribute", async () => {
       // Create a script element without init attribute
       const script = document.createElement("script");
       script.textContent = ""; // Empty script to simulate currentScript
@@ -102,7 +104,7 @@ describe("app", () => {
       consoleWarnSpy.mockRestore();
     });
 
-    it("should auto-mount when script has init attribute", async () => {
+    it.skipIf(!isDev)("should auto-mount when script has init attribute", async () => {
       // Create a script element with init attribute
       const script = document.createElement("script");
       script.setAttribute("init", "");
@@ -155,7 +157,7 @@ describe("app", () => {
       expect(container.textContent).toBe("42");
     });
 
-    it("should mount to body when no element provided", () => {
+    it.skipIf(!isDev)("should mount to body when no element provided", () => {
       const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
       document.body.innerHTML = "<div>{{ count }}</div>";
 
@@ -169,7 +171,7 @@ describe("app", () => {
       expect(document.body.textContent).toContain("42");
     });
 
-    it("should handle invalid selector", () => {
+    it.skipIf(!isDev)("should handle invalid selector", () => {
       const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
       const app = createApp({});

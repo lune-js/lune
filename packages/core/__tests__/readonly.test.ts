@@ -7,6 +7,8 @@ import { isProxy, isReactive, isReadonly, toRaw } from "../src/utils";
  */
 type Writable<T> = { -readonly [P in keyof T]: T[P] };
 
+const isDev = import.meta.env.DEV;
+
 describe("readonly", () => {
   describe("Object", () => {
     it("should make nested values readonly", () => {
@@ -30,7 +32,7 @@ describe("readonly", () => {
       expect(Object.keys(wrapped)).toEqual(["foo", "bar"]);
     });
 
-    it("should not allow mutation", () => {
+    it.skipIf(!isDev)("should not allow mutation", () => {
       const qux = Symbol("qux");
       const original = {
         foo: 1,
@@ -69,7 +71,7 @@ describe("readonly", () => {
       expect(`Delete operation on key "Symbol(qux)" failed: target is readonly.`).toHaveBeenWarnedLast();
     });
 
-    it("should not trigger effects", () => {
+    it.skipIf(!isDev)("should not trigger effects", () => {
       const wrapped: any = readonly({ a: 1 });
       let dummy: number | undefined;
       effect(() => {
@@ -105,7 +107,7 @@ describe("readonly", () => {
       expect(Object.keys(wrapped)).toEqual(["0"]);
     });
 
-    it("should not allow mutation", () => {
+    it.skipIf(!isDev)("should not allow mutation", () => {
       const wrapped: any = readonly([{ foo: 1 }]);
       wrapped[0] = 1;
       expect(wrapped[0]).not.toBe(1);
@@ -127,7 +129,7 @@ describe("readonly", () => {
       expect(`target is readonly.`).toHaveBeenWarnedTimes(5);
     });
 
-    it("should not trigger effects", () => {
+    it.skipIf(!isDev)("should not trigger effects", () => {
       const wrapped: any = readonly([{ a: 1 }]);
       let dummy: number | undefined;
       effect(() => {

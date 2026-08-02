@@ -3,6 +3,8 @@ import { reactive, effect } from "../src";
 import { readonly } from "../src/reactive";
 import { isProxy, isReactive, toRaw } from "../src/utils";
 
+const isDev = import.meta.env.DEV;
+
 describe("reactive", () => {
   test("Object", () => {
     const original = { foo: 1 };
@@ -163,7 +165,7 @@ describe("reactive", () => {
     expect(raw).toBe(original);
   });
 
-  test("non-observable values", () => {
+  test.skipIf(!isDev)("non-observable values", () => {
     const assertValue = (value: any) => {
       reactive(value);
       void expect(`value cannot be made reactive: ${String(value)}`).toHaveBeenWarnedLast();

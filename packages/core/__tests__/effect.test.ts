@@ -8,6 +8,8 @@ import { endBatch, startBatch } from "../src/system";
 import type { DebuggerEvent } from "../src/types";
 import { toRaw } from "../src/utils";
 
+const isDev = import.meta.env.DEV;
+
 describe("effect", () => {
   it("should run the passed function once (wrapped by a effect)", () => {
     const fnSpy = vi.fn(() => {});
@@ -728,7 +730,7 @@ describe("effect", () => {
     expect(dummy).toBe(2);
   });
 
-  it("events: onTrack", () => {
+  it.skipIf(!isDev)("events: onTrack", () => {
     let events: DebuggerEvent[] = [];
     let dummy: number | boolean | string[] | undefined;
     const onTrack = vi.fn((e: DebuggerEvent) => {

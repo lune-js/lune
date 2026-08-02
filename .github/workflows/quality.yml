@@ -12,8 +12,6 @@ jobs:
   quality:
     name: Quality
     runs-on: ubuntu-latest
-    env:
-      DEV: true
     steps:
       - name: Checkout branch
         uses: actions/checkout@v6
@@ -25,7 +23,7 @@ jobs:
         run: bun run build
 
       - name: Run tests
-        run: bun test
+        run: DEV=true bun test # DEV necessary to run all tests
 
       - name: Run lint
         run: bun lint

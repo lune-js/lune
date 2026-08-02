@@ -2,6 +2,8 @@ import { describe, it, expect, beforeEach, vi } from "bun:test";
 import { afterEach } from "bun:test";
 import { evaluate, execute } from "../src/eval";
 
+const isDev = import.meta.env.DEV;
+
 describe("evaluate", () => {
   let scope: any;
   let el: Element;
@@ -63,7 +65,7 @@ describe("evaluate", () => {
     expect(evaluate(scope, "isActive || false", el)).toBe(true);
   });
 
-  it("should handle undefined properties", () => {
+  it.skipIf(!isDev)("should handle undefined properties", () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     expect(evaluate(scope, "nonexistent", el)).toBeUndefined();
     expect(evaluate(scope, "user.nonexistent", el)).toBeUndefined();
@@ -124,7 +126,7 @@ describe("evaluate", () => {
     expect(result).toBe(2);
   });
 
-  it("should handle error cases gracefully", () => {
+  it.skipIf(!isDev)("should handle error cases gracefully", () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     expect(() => evaluate(scope, "syntax error", el)).not.toThrow();
     expect(evaluate(scope, "syntax error", el)).toBeUndefined();
@@ -164,7 +166,7 @@ describe("evaluate", () => {
     expect(evaluate(scope, "items[index]", el)).toBe("item1");
   });
 
-  it("should reject dangerous expressions", () => {
+  it.skipIf(!isDev)("should reject dangerous expressions", () => {
     const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     // Test various dangerous patterns
@@ -200,7 +202,7 @@ describe("execute", () => {
     expect(scope.sideEffect).toHaveBeenCalled();
   });
 
-  it("should handle error in execution", () => {
+  it.skipIf(!isDev)("should handle error in execution", () => {
     const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     // This should throw an error
@@ -220,7 +222,7 @@ describe("execute", () => {
     expect(scope.sideEffect).toHaveBeenCalledTimes(2);
   });
 
-  it("should handle invalid function syntax", () => {
+  it.skipIf(!isDev)("should handle invalid function syntax", () => {
     const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     // This syntax error should be caught
@@ -232,7 +234,7 @@ describe("execute", () => {
     consoleErrorSpy.mockRestore();
   });
 
-  it("should reject dangerous expressions in execute", () => {
+  it.skipIf(!isDev)("should reject dangerous expressions in execute", () => {
     const consoleWarnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     // Test dangerous expressions are rejected
@@ -244,7 +246,7 @@ describe("execute", () => {
     consoleWarnSpy.mockRestore();
   });
 
-  it("should invalidate cache on execution error", () => {
+  it.skipIf(!isDev)("should invalidate cache on execution error", () => {
     const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     // Create a function that will be cached initially
@@ -268,7 +270,7 @@ describe("execute", () => {
     consoleErrorSpy.mockRestore();
   });
 
-  it("should handle runtime errors in cached functions", () => {
+  it.skipIf(!isDev)("should handle runtime errors in cached functions", () => {
     const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
     // First execute a valid expression to cache it

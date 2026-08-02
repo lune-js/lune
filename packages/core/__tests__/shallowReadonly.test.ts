@@ -2,13 +2,15 @@ import { describe, expect, test } from "bun:test";
 import { readonly, shallowReadonly } from "../src";
 import { isReactive, isReadonly } from "../src/utils";
 
+const isDev = import.meta.env.DEV;
+
 describe("shallowReadonly", () => {
   test("should not make non-reactive properties reactive", () => {
     const props = shallowReadonly({ n: { foo: 1 } });
     expect(isReactive(props.n)).toBe(false);
   });
 
-  test("should make root level properties readonly", () => {
+  test.skipIf(!isDev)("should make root level properties readonly", () => {
     const props = shallowReadonly({ n: 1 });
     // @ts-expect-error
     props.n = 2;
@@ -17,7 +19,7 @@ describe("shallowReadonly", () => {
   });
 
   // to retain 2.x behavior.
-  test("should NOT make nested properties readonly", () => {
+  test.skipIf(!isDev)("should NOT make nested properties readonly", () => {
     const props = shallowReadonly({ n: { foo: 1 } });
 
     props.n.foo = 2;

@@ -2,6 +2,8 @@ import { describe, expect, test, vi } from "bun:test";
 import { effect, reactive, shallowReactive, shallowReadonly } from "../src";
 import { isReactive, isShallow } from "../src/utils";
 
+const isDev = import.meta.env.DEV;
+
 describe("shallowReactive", () => {
   test("should not make non-reactive properties reactive", () => {
     const props = shallowReactive({ n: { foo: 1 } });
@@ -77,7 +79,7 @@ describe("shallowReactive", () => {
       expect(isReactive(spreadA)).toBe(false);
     });
 
-    test("onTrack on called on objectSpread", () => {
+    test.skipIf(!isDev)("onTrack on called on objectSpread", () => {
       const onTrackFn = vi.fn();
       const shallowArray = shallowReactive([]);
       let a;

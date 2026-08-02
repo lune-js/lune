@@ -41,6 +41,4 @@ jobs:
           publish: bun run release
           title: "chore: release packages"
           commit: "chore: release packages"
-        env:
-          DEV: true # * For version
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -51,17 +51,16 @@ export const createApp = <HostElement extends Element = Element>(initialData?: a
     },
 
     mount(el?: string | HostElement | null) {
-      let $el: HostElement | HTMLElement | null = null;
-
       if (typeof el === "string") {
-        $el = document.querySelector(el);
-        if (!$el) {
-          if (import.meta.env.DEV) error(`selector ${el} has no matching element.`);
+        const selector = el;
+        el = document.querySelector(el);
+        if (!el) {
+          if (import.meta.env.DEV) error(`selector ${selector} has no matching element.`);
           return;
         }
       }
 
-      $el = $el ?? document.documentElement;
+      const $el = el ?? document.documentElement;
       let roots: Element[];
       if ($el.hasAttribute("lu-scope")) {
         roots = [$el];

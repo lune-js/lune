@@ -4,6 +4,8 @@ import { createContext, evaluate, nextTick } from "@lune-js/context";
 import { effect } from "../src";
 import { on } from "../src/directives/on";
 
+const isDev = import.meta.env.DEV;
+
 describe("on", () => {
   let container: HTMLElement;
   let ctx: any;
@@ -439,7 +441,7 @@ describe("on", () => {
     expect(handler).toHaveBeenCalled();
   });
 
-  it("should return early when no arg provided", () => {
+  it.skipIf(!isDev)("should return early when no arg provided", () => {
     const el = document.createElement("div");
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
@@ -457,7 +459,7 @@ describe("on", () => {
     consoleSpy.mockRestore();
   });
 
-  it("should warn about deprecated mounted/unmounted hooks", () => {
+  it.skipIf(!isDev)("should warn about deprecated mounted/unmounted hooks", () => {
     const el = document.createElement("div");
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 
@@ -494,7 +496,7 @@ describe("on", () => {
     consoleSpy.mockRestore();
   });
 
-  it("should warn when lu-on has no event type in DEV", () => {
+  it.skipIf(!isDev)("should warn when lu-on has no event type in DEV", () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
     const originalDEV = (globalThis as any).import?.meta?.env?.DEV;
     (globalThis as any).import = { meta: { env: { DEV: true } } };
