@@ -1,6 +1,6 @@
 {
   "name": "@lune-js/utils",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lower level utilities to build Lune.js",
   "bugs": {
     "url": "https://github.com/lune-js/lune/issues"

@@ -1,5 +1,11 @@
 # @lune-js/utils
 
+## [0.2.1] - 2026-08-02
+
+### Fixed
+
+- Update repo info in package.json.
+
 ## [0.2.0] - 2026-07-31
 
 ### Added

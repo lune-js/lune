@@ -1,5 +1,16 @@
 # lune-js
 
+## [0.2.1] - 2026-08-02
+
+### Fixed
+
+- Update repo info in package.json.
+
+- Fixes bundler issue with browser export.
+  Removes redundant scripts in browser file and exports `createApp` from index.
+
+- Generic type for `App` and export `Directive`.
+
 ## [0.2.0] - 2026-07-31
 
 ### Added
