@@ -40,10 +40,8 @@
     "build": "tsdown",
     "clean": "rm -rf dist node_modules"
   },
-  "dependencies": {
-    "es-toolkit": "1.50.0"
-  },
   "devDependencies": {
+    "es-toolkit": "1.50.0",
     "tsdown": "0.22.14",
     "typescript": "7.0.2"
   },

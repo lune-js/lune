@@ -43,12 +43,10 @@
     "clean": "rm -rf dist node_modules",
     "dev": "vite serve examples"
   },
-  "dependencies": {
+  "devDependencies": {
     "@lune-js/context": "0.2.1",
     "@lune-js/core": "0.2.1",
-    "@lune-js/utils": "0.2.1"
-  },
-  "devDependencies": {
+    "@lune-js/utils": "0.2.1",
     "tsdown": "0.22.14",
     "typescript": "7.0.2",
     "vite": "8.2.0"
