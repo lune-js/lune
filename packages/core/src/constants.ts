@@ -3,8 +3,7 @@ export enum ReactiveFlags {
   IS_REACTIVE = "__lu_isReactive",
   IS_READONLY = "__lu_isReadonly",
   IS_SHALLOW = "__lu_isShallow",
-  RAW = "__lu_raw",
-  IS_REF = "__lu_isRef"
+  RAW = "__lu_raw"
 }
 
 export enum SystemFlags {
@@ -15,6 +14,11 @@ export enum SystemFlags {
   Recursed = 1 << 3,
   Dirty = 1 << 4,
   Pending = 1 << 5
+}
+
+export enum TargetType {
+  INVALID = 0,
+  COMMON = 1
 }
 
 export enum TrackOpTypes {

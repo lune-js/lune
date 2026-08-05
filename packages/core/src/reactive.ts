@@ -1,28 +1,8 @@
 import { isObject, warn } from "@lune-js/utils";
-import { ReactiveFlags } from "./constants";
+import { ReactiveFlags, TargetType } from "./constants";
 import { mutableHandlers, readonlyHandlers, shallowReactiveHandlers, shallowReadonlyHandlers } from "./handlers";
-import type { DeepReadonly, Target, UnwrapNestedRefs } from "./types";
+import type { DeepReadonly, Reactive, Target } from "./types";
 import { isReadonly, toRawType } from "./utils";
-
-enum TargetType {
-  INVALID = 0,
-  COMMON = 1
-}
-
-declare const ReactiveMarkerSymbol: unique symbol;
-interface ReactiveMarker {
-  [ReactiveMarkerSymbol]?: void;
-}
-type Reactive<T> = UnwrapNestedRefs<T> & (T extends readonly any[] ? ReactiveMarker : {});
-
-// Use a private class brand instead of a marker property so shallow-reactive
-// types remain distinguishable in `UnwrapRef` without leaking the brand into
-// `keyof`/indexed access types or requiring the property for plain assignment.
-declare class ShallowReactiveBrandClass {
-  private __shallowReactiveBrand?: never;
-}
-type ShallowReactiveBrand = ShallowReactiveBrandClass;
-type ShallowReactive<T> = T & ShallowReactiveBrand;
 
 export const reactiveMap: WeakMap<Target, any> = new WeakMap<Target, any>();
 export const readonlyMap: WeakMap<Target, any> = new WeakMap<Target, any>();
@@ -88,7 +68,7 @@ export function reactive(target: object) {
  * @returns A shallow reactive proxy.
  */
 /*@__NO_SIDE_EFFECTS__*/
-export function shallowReactive<T extends object>(target: T): ShallowReactive<T> {
+export function shallowReactive<T extends object>(target: T): T {
   return createReactiveObject(target, false, shallowReactiveHandlers, shallowReactiveMap);
 }
 
@@ -99,7 +79,7 @@ export function shallowReactive<T extends object>(target: T): ShallowReactive<T>
  * @returns A deeply immutable and reactive proxy window.
  */
 /*@__NO_SIDE_EFFECTS__*/
-export function readonly<T extends object>(target: T): DeepReadonly<UnwrapNestedRefs<T>> {
+export function readonly<T extends object>(target: T): DeepReadonly<Reactive<T>> {
   return createReactiveObject(target, true, readonlyHandlers, readonlyMap);
 }
 
