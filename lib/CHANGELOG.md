@@ -1,5 +1,13 @@
 # lune-js
 
+## [0.3.0] - 2026-08-05
+
+### Added
+
+- Set internal packages as `devDependencies`.
+  - The bundlers, tsdown, have been inlining dependencies for a while.
+  - Reduces `node_modules` for users.
+
 ## [0.2.1] - 2026-08-02
 
 ### Fixed

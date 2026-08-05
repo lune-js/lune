@@ -1,6 +1,6 @@
 {
   "name": "@lune-js/core",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "The core reactive package for Lune.js",
   "bugs": {
     "url": "https://github.com/lune-js/lune/issues"
@@ -41,7 +41,7 @@
     "clean": "rm -rf dist node_modules"
   },
   "devDependencies": {
-    "@lune-js/utils": "0.2.1",
+    "@lune-js/utils": "0.3.0",
     "tsdown": "0.22.14",
     "typescript": "7.0.2"
   },
