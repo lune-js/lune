@@ -40,8 +40,10 @@
     "build": "tsdown",
     "clean": "rm -rf dist node_modules"
   },
+  "dependencies": {
+    "@lune-js/utils": "0.3.0"
+  },
   "devDependencies": {
-    "@lune-js/utils": "0.3.0",
     "tsdown": "0.22.14",
     "typescript": "7.0.2"
   },

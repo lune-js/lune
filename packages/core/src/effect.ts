@@ -32,10 +32,14 @@ export class ReactiveEffect<T = any> implements ReactiveEffectOptions, ReactiveN
    */
   cleanupsLength = 0;
 
+  // `declare` keeps these off the instance: class fields are defined (not assigned) on
+  // construction, and an own `onTrigger` would shadow the prototype accessor that
+  // `setupOnTrigger` installs, so assigning the hook would never arm the trigger events.
+
   // dev only
-  onTrack?: (event: DebuggerEvent) => void;
+  declare onTrack?: (event: DebuggerEvent) => void;
   // dev only
-  onTrigger?: (event: DebuggerEvent) => void;
+  declare onTrigger?: (event: DebuggerEvent) => void;
 
   // @ts-expect-error
   fn(): T {}

@@ -115,4 +115,4 @@ export const createApp = <HostElement extends Element = Element>(initialData?: a
 };
 
 export { effect, reactive, readonly, shallowReactive, shallowReadonly } from "@lune-js/core";
-export { nextTick } from "@lune-js/context";
+export { allowGlobals, nextTick } from "@lune-js/context";

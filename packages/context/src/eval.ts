@@ -1,14 +1,28 @@
 import { error, warn } from "@lune-js/utils";
+import type { CompiledExpression } from "./expression/compiler";
+import { compile, UnsafeExpressionError } from "./expression/compiler";
+import { parse } from "./expression/parser";
 
-const evalCache: Record<string, Function> = Object.create(null);
+export { allowGlobals } from "./expression/globals";
 
-// Expression validation patterns - more conservative to avoid blocking legitimate code
-const DANGEROUS_PATTERNS = [
-  /\b(eval|Function|setTimeout|setInterval|XMLHttpRequest|fetch|WebSocket|Worker)\b/,
-  /\b(window|document|globalThis|global|process|require|import|export)\b/,
-  /\b(delete|void|typeof|instanceof)\b.*\(/
-];
+/**
+ * Upper bound on expression source length. Template bindings are short by nature, so anything
+ * longer is either generated or hostile, and is cheaper to reject than to parse.
+ */
+const MAX_EXPRESSION_LENGTH = 1000;
 
+const evalCache: Record<string, CompiledExpression> = Object.create(null);
+
+/** Stand-in for expressions that failed to compile, so a broken binding is only reported once. */
+const noop: CompiledExpression = () => undefined;
+
+/**
+ * Evaluates a single expression against a scope and returns its value.
+ * @param scope - The reactive data object the expression reads from.
+ * @param exp - The expression source, without a trailing semicolon or statement.
+ * @param el - The element the binding belongs to, exposed to the expression as `$el`.
+ * @returns The value the expression produced, or `undefined` when it could not be run.
+ */
 export function evaluate(scope: any, exp: string, el?: Node): any {
   if (!exp.trim()) {
     if (import.meta.env.DEV) {
@@ -20,10 +34,18 @@ export function evaluate(scope: any, exp: string, el?: Node): any {
   return execute(scope, `return(${exp})`, el);
 }
 
+/**
+ * Runs a statement list against a scope. Compilation happens once per unique source and is cached;
+ * every later run reuses the compiled closure tree.
+ * @param scope - The reactive data object the statements read from and write to.
+ * @param exp - The source to run, which may contain several statements.
+ * @param el - The element the binding belongs to, exposed to the expression as `$el`.
+ * @returns The value returned by the source, or `undefined` when it could not be run.
+ */
 export function execute(scope: any, exp: string, el?: Node): any {
-  if (!validateExpression(exp)) {
+  if (exp.length > MAX_EXPRESSION_LENGTH) {
     if (import.meta.env.DEV) {
-      warn(`Potentially unsafe expression rejected: "${exp}"`);
+      warn(`Expression exceeds the ${MAX_EXPRESSION_LENGTH} character limit and was rejected.`);
     }
     return undefined;
   }
@@ -41,22 +63,31 @@ export function execute(scope: any, exp: string, el?: Node): any {
   }
 }
 
-function toFunction(exp: string): Function {
+/**
+ * Parses and compiles an expression into a closure tree.
+ * The engine is a self contained parser and interpreter, so no dynamic code is created and the
+ * library stays usable under a Content Security Policy that forbids `unsafe-eval`.
+ * @param exp - The expression source to compile.
+ * @returns The compiled expression, or a no-op when the source is invalid or unsafe.
+ */
+function toFunction(exp: string): CompiledExpression {
   try {
-    // ! High Risk: Implied eval. Do not use the Function constructor to create functions.
-    // TODO: `with` is deprecated https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with
-    // ? https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with#avoiding_the_with_statement_by_using_an_iife
-    // oxlint-disable-next-line typescript/no-implied-eval
-    return new Function(`$data`, `$el`, `with($data){${exp}}`);
+    const program = parse(exp);
+    if (program.body.length === 0) {
+      if (import.meta.env.DEV) {
+        warn(`Empty expression. \`execute\` must contain at least one statement.`);
+      }
+      return noop;
+    }
+    return compile(program);
   } catch (e) {
     if (import.meta.env.DEV) {
-      error(`Invalid expression: "${exp}"`, e);
+      if (e instanceof UnsafeExpressionError) {
+        warn(`Potentially unsafe expression rejected: "${exp}"`, e.message);
+      } else {
+        error(`Invalid expression: "${exp}"`, e);
+      }
     }
-    return () => {};
+    return noop;
   }
-}
-
-function validateExpression(exp: string): boolean {
-  if (exp == null || exp === "" || exp.length > 1000) return false;
-  return !DANGEROUS_PATTERNS.some((pattern) => pattern.test(exp));
 }

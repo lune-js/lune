@@ -769,8 +769,7 @@ describe("effect", () => {
     ]);
   });
 
-  // ? Only for development purposes; won't ever show up in a production bundle.
-  it.todo("events: onTrigger", () => {
+  it("events: onTrigger", () => {
     let events: DebuggerEvent[] = [];
     let dummy: number | undefined;
     const onTrigger = vi.fn((e: DebuggerEvent) => {
