@@ -769,7 +769,7 @@ describe("effect", () => {
     ]);
   });
 
-  it("events: onTrigger", () => {
+  it.skipIf(!isDev)("events: onTrigger", () => {
     let events: DebuggerEvent[] = [];
     let dummy: number | undefined;
     const onTrigger = vi.fn((e: DebuggerEvent) => {
