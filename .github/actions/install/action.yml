@@ -4,7 +4,10 @@ description: Set up Bun.js and run install
 runs:
   using: composite
   steps:
-    - uses: oven-sh/setup-bun@v2
+    - name: Setup Bun.js
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: "package.json"
 
     - name: Setup Git User
       shell: bash

@@ -22,8 +22,8 @@
     "release": "changeset publish"
   },
   "devDependencies": {
-    "@changesets/cli": "3.0.1",
-    "@happy-dom/global-registrator": "20.13.2",
+    "@changesets/cli": "3.0.2",
+    "@happy-dom/global-registrator": "20.14.0",
     "@types/bun": "1.4.0",
     "lefthook": "2.1.12",
     "oxfmt": "0.66.0",
