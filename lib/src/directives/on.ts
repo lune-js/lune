@@ -8,6 +8,9 @@ const simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]
 
 const systemModifiers = ["ctrl", "shift", "alt", "meta"];
 
+// forwarded to addEventListener rather than checked when the event fires
+const listenerOptions = new Set(["capture", "once", "passive"]);
+
 type KeyedEvent = KeyboardEvent | MouseEvent | TouchEvent;
 
 const modifierGuards: Record<string, (e: Event, modifiers: Record<string, true>) => void | boolean> = {
@@ -60,9 +63,12 @@ export const on: Directive<Element> = ({ el, exp, get, arg, modifiers }) => {
       if (modifiers.middle) arg = "mouseup";
     }
 
+    // anything that is neither a guard nor a listener option names a key
+    const keyModifiers = Object.keys(modifiers).filter((m) => !(m in modifierGuards) && !listenerOptions.has(m));
+
     const raw = handler;
     handler = (e: Event) => {
-      if ("key" in e && !(kebabCase((e as KeyboardEvent).key) in modifiers)) {
+      if (keyModifiers.length && "key" in e && !keyModifiers.includes(kebabCase((e as KeyboardEvent).key))) {
         return;
       }
       for (const key in modifiers) {
