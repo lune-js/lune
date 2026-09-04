@@ -1,6 +1,6 @@
 import { SystemFlags } from "./constants";
 import { setupOnTrigger } from "./debug";
-import { checkDirty, decRunDepth, endTracking, incRunDepth, startTracking, unlink } from "./system";
+import { decRunDepth, endTracking, incRunDepth, startTracking, unlink } from "./system";
 import type { DebuggerEvent, Link, ReactiveEffectOptions, ReactiveEffectRunner, ReactiveNode } from "./types";
 
 enum EffectFlags {
@@ -19,8 +19,6 @@ enum EffectFlags {
 export class ReactiveEffect<T = any> implements ReactiveEffectOptions, ReactiveNode {
   deps: Link | undefined = undefined;
   depsTail: Link | undefined = undefined;
-  subs: Link | undefined = undefined;
-  subsTail: Link | undefined = undefined;
   flags: number = SystemFlags.Watching | SystemFlags.Dirty;
 
   /**
@@ -113,28 +111,16 @@ export class ReactiveEffect<T = any> implements ReactiveEffectOptions, ReactiveN
     while (dep !== undefined) {
       dep = unlink(dep, this);
     }
-    const sub = this.subs;
-    if (sub !== undefined) {
-      unlink(sub);
-    }
     cleanup(this);
   }
 
+  /**
+   * `trigger` always pairs `propagate` with `shallowPropagate` over the same subscriber list, so
+   * every subscriber left pending is promoted to dirty before it is ever notified. `Pending`
+   * therefore never outlives `Dirty` here, and this only has to read the one flag.
+   */
   get dirty(): boolean {
-    const flags = this.flags;
-    if (flags & SystemFlags.Dirty) {
-      return true;
-    }
-
-    if (flags & SystemFlags.Pending) {
-      if (checkDirty(this.deps!, this)) {
-        this.flags = flags | SystemFlags.Dirty;
-        return true;
-      }
-
-      this.flags = flags & ~SystemFlags.Pending;
-    }
-    return false;
+    return !!(this.flags & SystemFlags.Dirty);
   }
 }
 
