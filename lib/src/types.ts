@@ -17,7 +17,7 @@ export interface App<HostElement = Element> {
 }
 
 /**
- * Definitions for Lune.js attributes.
+ * Definitions for Lune attributes.
  */
 export interface Attributes {
   /**
@@ -119,14 +119,14 @@ export interface Attributes {
 
   /**
    * The primary directive that marks a region of the DOM
-   * that should be controlled by Lune.js.
+   * that should be controlled by Lune.
    *
    * @see https://github.com/vuejs/petite-vue#usage
    * @category Core
    * @remarks
    * - The `defer` attribute makes the script execute after HTML content is parsed.
-   * - The `init` attribute tells Lune.js to automatically query and initialize all elements that have `lu-scope` on the page.
-   * - If you don't want Lune.js to auto-mount, remove the `init` attribute and move the scripts to end of `<body>`.
+   * - The `init` attribute tells Lune to automatically query and initialize all elements that have `lu-scope` on the page.
+   * - If you don't want Lune to auto-mount, remove the `init` attribute and move the scripts to end of `<body>`.
    *
    * ```html
    * <!-- auto init -->
