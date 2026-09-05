@@ -1,7 +1,7 @@
 <div align="center">
  <h1>
-    <a href="https://github.com/lune-js/lune">
-      <img alt="Lune.js - Simple, declarative, and functional library for building reactive user interfaces." src="./.github/assets/text.svg" width="400">
+    <a href="https://lune-js.com">
+      <img alt="Lune.js - Simple, declarative, and functional library for building reactive user interfaces." src="https://lune-js.com/text.svg" width="400">
     </a>
   </h1>
 </div>
