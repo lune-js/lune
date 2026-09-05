@@ -74,8 +74,8 @@ export const createApp = <HostElement extends Element = Element>(initialData?: a
 
       if (import.meta.env.DEV && roots.length === 1 && roots[0] === document.documentElement) {
         warn(
-          "Mounting on documentElement: this is non-optimal as Lune.js will be forced to crawl the entire page's DOM.",
-          `Consider explicitly marking elements controlled by Lune.js with "lu-scope".`
+          "Mounting on documentElement: this is non-optimal as Lune will be forced to crawl the entire page's DOM.",
+          `Consider explicitly marking elements controlled by Lune with "lu-scope".`
         );
       }
 
@@ -115,4 +115,4 @@ export const createApp = <HostElement extends Element = Element>(initialData?: a
 };
 
 export { effect, reactive, readonly, shallowReactive, shallowReadonly } from "@lune-js/core";
-export { nextTick } from "@lune-js/context";
+export { allowGlobals, nextTick } from "@lune-js/context";

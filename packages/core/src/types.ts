@@ -23,8 +23,9 @@ type EffectScheduler = (...args: any[]) => any;
 
 export interface Link {
   version: number;
-  dep: ReactiveNode | ReactiveEffect;
-  sub: ReactiveNode | ReactiveEffect;
+  // an effect is only ever a subscriber, never a dependency, so both ends are plain nodes
+  dep: ReactiveNode;
+  sub: ReactiveNode;
   prevSub: Link | undefined;
   nextSub: Link | undefined;
   prevDep: Link | undefined;

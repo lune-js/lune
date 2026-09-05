@@ -17,12 +17,12 @@ export interface App<HostElement = Element> {
 }
 
 /**
- * Definitions for Lune.js attributes.
+ * Definitions for Lune attributes.
  */
 export interface Attributes {
   /**
    * Used to dynamically bind one or more attributes to an expression.
-   * @see https://vuejs.org/api/built-in-directives.html#v-bind
+   * @see {@link http://lune-js.com/directives/lu-bind}
    * @category Core
    *
    * ```html
@@ -38,16 +38,16 @@ export interface Attributes {
   /**
    * Used to hide un-compiled templates until the component instance is ready.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-cloak
+   * @see {@link http://lune-js.com/directives/lu-cloak}
    * @category Core
    */
   ["lu-cloak"]?: string;
 
   /**
-   * Execute reactive inline statements. Similar to running Vue's
-   * [`watchEffect() `](https://vuejs.org/api/reactivity-core.html#watcheffect) inline.
+   * Execute reactive inline statements. Similar to running Lune's
+   * [`effect()`](http://lune-js.com/guide/reactivity#effect-fn) inline.
    *
-   * @see https://github.com/vuejs/petite-vue#v-effect
+   * @see {@link http://lune-js.com/directives/lu-effect}
    * @category Core
    */
   ["lu-effect"]?: string;
@@ -55,7 +55,7 @@ export interface Attributes {
   /**
    * Render a list of elements by iterating over an array or an object.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-for
+   * @see {@link http://lune-js.com/directives/lu-for}
    * @category Core
    */
   ["lu-for"]?: string;
@@ -63,7 +63,7 @@ export interface Attributes {
   /**
    * Update an element's [`innerHTML`](https://developer.mozilla.org/docs/Web/API/Element/innerHTML).
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-html
+   * @see {@link http://lune-js.com/directives/lu-html}
    * @category Core
    */
   ["lu-html"]?: string;
@@ -71,7 +71,7 @@ export interface Attributes {
   /**
    * Conditionally render an element based on the truthiness of an expression.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-if
+   * @see {@link http://lune-js.com/directives/lu-if}
    * @category Core
    */
   ["lu-if"]?: string;
@@ -79,7 +79,7 @@ export interface Attributes {
   /**
    * Create a two-way binding on a form input element or a component.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-model
+   * @see {@link http://lune-js.com/directives/lu-model}
    * @category Core
    */
   ["lu-model"]?: string;
@@ -88,7 +88,7 @@ export interface Attributes {
    * Attach event listeners to elements. It supports both inline expressions
    * and method calls from your scope.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-on
+   * @see {@link http://lune-js.com/directives/lu-on}
    * @category Core
    */
   ["lu-on"]?: string;
@@ -96,7 +96,7 @@ export interface Attributes {
   /**
    * Render the element and component once only, and skip future updates.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-once
+   * @see {@link http://lune-js.com/directives/lu-once}
    * @category Core
    *
    * ```html
@@ -108,7 +108,7 @@ export interface Attributes {
   /**
    * Skip compilation for this element and all its children.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-pre
+   * @see {@link http://lune-js.com/directives/lu-pre}
    * @category Core
    *
    * ```html
@@ -119,14 +119,14 @@ export interface Attributes {
 
   /**
    * The primary directive that marks a region of the DOM
-   * that should be controlled by Lune.js.
+   * that should be controlled by Lune.
    *
-   * @see https://github.com/vuejs/petite-vue#usage
+   * @see {@link http://lune-js.com/directives/lu-scope}
    * @category Core
    * @remarks
    * - The `defer` attribute makes the script execute after HTML content is parsed.
-   * - The `init` attribute tells Lune.js to automatically query and initialize all elements that have `lu-scope` on the page.
-   * - If you don't want Lune.js to auto-mount, remove the `init` attribute and move the scripts to end of `<body>`.
+   * - The `init` attribute tells Lune to automatically query and initialize all elements that have `lu-scope` on the page.
+   * - If you don't want Lune to auto-mount, remove the `init` attribute and move the scripts to end of `<body>`.
    *
    * ```html
    * <!-- auto init -->
@@ -151,7 +151,7 @@ export interface Attributes {
    * of the expression value. It manipulates the CSS
    * [`display`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/display) property.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-show
+   * @see {@link http://lune-js.com/directives/lu-show}
    * @category Core
    */
   ["lu-show"]?: string;
@@ -160,7 +160,7 @@ export interface Attributes {
    * Update the element's text content. It is a one-way binding
    * from a reactive property to the DOM.
    *
-   * @see https://vuejs.org/api/built-in-directives.html#v-text
+   * @see {@link http://lune-js.com/directives/lu-text}
    * @category Core
    */
   ["lu-text"]?: string;
@@ -168,7 +168,7 @@ export interface Attributes {
   /**
    * Register a reference to a DOM element.
    *
-   * @see https://vuejs.org/api/built-in-special-attributes.html#ref
+   * @see {@link http://lune-js.com/directives/ref}
    * @category Core
    */
   ref?: string;

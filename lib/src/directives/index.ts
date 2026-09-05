@@ -60,7 +60,7 @@ export function walk(node: Node, ctx: Context): ChildNode | null | void {
 
     // lu-scope
     if ((exp = checkAttr(el, "lu-scope")) || exp === "") {
-      const scope = exp ? evaluate(ctx.scope, exp, el) : {};
+      const scope = (exp ? evaluate(ctx.scope, exp, el) : {}) ?? {};
       scope.$root = el;
 
       ctx = createScopedContext(ctx, scope);

@@ -399,6 +399,47 @@ describe("on", () => {
     expect(handler).toHaveBeenCalledTimes(1); // Should not be called again
   });
 
+  it("should not filter keyboard events when only event modifiers are used", () => {
+    const el = document.createElement("input");
+    const handler = vi.fn();
+    ctx.scope.handler = handler;
+
+    on({
+      el,
+      get: () => handler,
+      effect,
+      exp: "handler",
+      arg: "keyup",
+      modifiers: { stop: true },
+      ctx
+    });
+
+    el.dispatchEvent(new KeyboardEvent("keyup", { key: "a" }));
+    expect(handler).toHaveBeenCalled();
+  });
+
+  it("should not filter keyboard events when only system modifiers are used", () => {
+    const el = document.createElement("input");
+    const handler = vi.fn();
+    ctx.scope.handler = handler;
+
+    on({
+      el,
+      get: () => handler,
+      effect,
+      exp: "handler",
+      arg: "keydown",
+      modifiers: { ctrl: true },
+      ctx
+    });
+
+    el.dispatchEvent(new KeyboardEvent("keydown", { key: "s", ctrlKey: true }));
+    expect(handler).toHaveBeenCalled();
+
+    el.dispatchEvent(new KeyboardEvent("keydown", { key: "s" }));
+    expect(handler).toHaveBeenCalledTimes(1);
+  });
+
   it("should handle right click modifier mapping", () => {
     const el = document.createElement("button");
     const handler = vi.fn();

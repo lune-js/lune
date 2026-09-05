@@ -128,8 +128,8 @@ describe("app", () => {
 
       // Verify warning was logged (since mount is called and logs a warning in dev mode)
       expect(consoleWarnSpy).toHaveBeenCalledWith(
-        "[Lune] WARN - Mounting on documentElement: this is non-optimal as Lune.js will be forced to crawl the entire page's DOM.",
-        `Consider explicitly marking elements controlled by Lune.js with "lu-scope".`
+        "[Lune] WARN - Mounting on documentElement: this is non-optimal as Lune will be forced to crawl the entire page's DOM.",
+        `Consider explicitly marking elements controlled by Lune with "lu-scope".`
       );
 
       // Restore the spy
@@ -165,8 +165,8 @@ describe("app", () => {
       app.mount();
 
       expect(warnSpy).toHaveBeenCalledWith(
-        "[Lune] WARN - Mounting on documentElement: this is non-optimal as Lune.js will be forced to crawl the entire page's DOM.",
-        `Consider explicitly marking elements controlled by Lune.js with "lu-scope".`
+        "[Lune] WARN - Mounting on documentElement: this is non-optimal as Lune will be forced to crawl the entire page's DOM.",
+        `Consider explicitly marking elements controlled by Lune with "lu-scope".`
       );
       expect(document.body.textContent).toContain("42");
     });

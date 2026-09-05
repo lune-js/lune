@@ -8,12 +8,11 @@ export enum ReactiveFlags {
 
 export enum SystemFlags {
   None = 0,
-  Mutable = 1 << 0,
-  Watching = 1 << 1,
-  RecursedCheck = 1 << 2,
-  Recursed = 1 << 3,
-  Dirty = 1 << 4,
-  Pending = 1 << 5
+  Watching = 1 << 0,
+  RecursedCheck = 1 << 1,
+  Recursed = 1 << 2,
+  Dirty = 1 << 3,
+  Pending = 1 << 4
 }
 
 export enum TargetType {

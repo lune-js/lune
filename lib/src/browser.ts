@@ -13,6 +13,6 @@ export const autoMount = (): void => {
 };
 
 export { effect, reactive, readonly, shallowReactive, shallowReadonly } from "@lune-js/core";
-export { nextTick } from "@lune-js/context";
+export { allowGlobals, nextTick } from "@lune-js/context";
 
 autoMount();

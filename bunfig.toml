@@ -8,5 +8,5 @@ registry = { url = "https://registry.npmjs.org", token = "$NPM_TOKEN" }
 # https://bun.sh/docs/runtime/bunfig#test-runner
 coverage = true
 coveragePathIgnorePatterns = ["**/dist/**", "test-preload.ts"]
-coverageThreshold = 0.3 # TODO: Raise back to 0.7 (packages/core/src/debug.ts, packages/core/src/arrayInstrumentations.ts, lib/src/utils.ts)
+coverageThreshold = 0.7
 preload = ["./test-preload.ts"]
