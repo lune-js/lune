@@ -65,6 +65,8 @@ jobs:
       - name: Version packages
         id: version
         uses: changesets/action/version@v2
+        with:
+          script: bun changeset version && bun .changeset/postprocess-changelogs.cjs
 
   pack:
     name: Pack

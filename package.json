@@ -16,13 +16,11 @@
     "fresh": "bun clean && bun install",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "postinstall": "lefthook install",
-    "changeset": "changeset",
-    "version": "changeset version && bun update && node .changeset/postprocess-changelogs.cjs",
-    "release": "changeset publish"
+    "postinstall": "lefthook install"
   },
   "devDependencies": {
     "@changesets/cli": "3.0.2",
+    "@changesets/config": "4.0.0",
     "@happy-dom/global-registrator": "20.14.0",
     "@types/bun": "1.4.0",
     "lefthook": "2.1.12",
