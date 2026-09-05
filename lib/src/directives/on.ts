@@ -30,7 +30,7 @@ const modifierGuards: Record<string, (e: Event, modifiers: Record<string, true>)
 /**
  * Drives event listener attachments and modifier strategies (`lu-on` or `@`).
  * Resolves expression types into executable method invocations, abstracts special lifecycles
- * like `vue:mounted` or `vue:unmounted`, and intercepts events via structured modifier filters
+ * like `lune:mounted` or `lune:unmounted`, and intercepts events via structured modifier filters
  * (e.g., `.stop`, `.prevent`, `.ctrl`, `.exact`).
  * @param ctx - The execution context bundle provided to the directive engine.
  * @returns An optional cleanup subroutine to tear down global window/element listeners.

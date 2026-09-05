@@ -10,11 +10,10 @@ Lune.js is a fork of [`petite-vue`](https://github.com/vuejs/petite-vue), an alt
 This project has been created because `petite-vue` has not been updated for nearly **5 years**. Lune modernizes and adds features missing in `petite-vue`:
 
 - Utilize [Alien Signals](https://github.com/stackblitz/alien-signals) to perform reactive rendering and optimized updates to the DOM.
-- Build with [custom directives](https://vuejs.org/guide/reusability/custom-directives.html)
-  and [plugins](https://vuejs.org/guide/reusability/plugins.html) to enhance development experience.
+- Create [custom directives](http://lune-js.com/advanced/custom-directives) and [plugins](http://lune-js.com/advanced/plugins)
+  to enhance the development experience.
 - Run template bindings through a self contained expression engine instead of the `Function` constructor,
   so no `unsafe-eval` is needed in a Content Security Policy.
-- Exposes global variables such as [`$root`](https://vuejs.org/api/component-instance.html#root),
-  [`$refs`](https://vuejs.org/api/component-instance.html#refs), and [`$el`](https://vuejs.org/api/component-instance.html#el).
+- Exposes [properties](http://lune-js.com/guide/properties) in directives such as `$root`, `$refs`, and `$el`.
 
-A big difference from `petite-vue`: [directives](https://vuejs.org/api/built-in-directives.html) start with `lu-` instead of `v-`.
+A big difference from `petite-vue`: [directives start with `lu-` instead of `v-`](http://lune-js.com/directives).
