@@ -14,7 +14,7 @@ const deps: UserConfig["deps"] = {
 export default defineConfig([
   {
     deps,
-    dts: { oxc: true },
+    dts: { generator: "oxc" },
     format: ["esm"],
     target: "esnext"
   },
@@ -31,7 +31,7 @@ export default defineConfig([
       "import.meta.env.DEV": "undefined"
     },
     deps,
-    dts: { oxc: true },
+    dts: { generator: "oxc" },
     format: ["cjs"],
     target: "esnext"
   }

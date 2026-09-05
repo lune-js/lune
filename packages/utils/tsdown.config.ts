@@ -6,7 +6,7 @@ export default defineConfig({
     onlyBundle: ["es-toolkit"],
     neverBundle: []
   },
-  dts: { oxc: true },
+  dts: { generator: "oxc" },
   format: ["cjs", "esm"],
   target: "esnext"
 });

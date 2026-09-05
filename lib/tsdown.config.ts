@@ -20,7 +20,7 @@ const sharedConfig: Pick<UserConfig, "define" | "deps"> = {
 export default defineConfig([
   {
     ...sharedConfig,
-    dts: { oxc: true },
+    dts: { generator: "oxc" },
     format: ["cjs", "esm"],
     target: "esnext"
   },
