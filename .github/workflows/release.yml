@@ -66,7 +66,7 @@ jobs:
         id: version
         uses: changesets/action/version@v2
         with:
-          script: bun changeset version && bun .changeset/postprocess-changelogs.cjs
+          script: bun run version
           pr-title: "chore: release packages"
           commit-message: "chore: release packages"
 

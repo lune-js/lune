@@ -16,7 +16,8 @@
     "fresh": "bun clean && bun install",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
-    "postinstall": "lefthook install"
+    "postinstall": "lefthook install",
+    "version": "bun changeset version && bun .changeset/postprocess-changelogs.cjs"
   },
   "devDependencies": {
     "@changesets/cli": "3.0.2",
