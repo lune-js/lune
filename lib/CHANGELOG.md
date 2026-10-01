@@ -1,5 +1,33 @@
 # lune-js
 
+## 0.4.0
+
+### Minor Changes
+
+- Various patches, bundle optimization, and performance refactor.
+  - Fix directive bugs.
+  - Refactors dirty and mutable checks in `system.ts`.
+  - Stop bundling `@lune-js/core` into `@lune-js/context`.
+
+### Patch Changes
+
+- Fix directive bugs.
+
+  - A `lu-scope` expression that fails no longer aborts the mount.
+    The scope falls back to an empty object, so the failure stays local to that region and every sibling region still renders.
+  - Event modifiers, system modifiers, and listener options no longer filter keyboard events. `@keyup.stop` and `@keydown.ctrl`
+    were silently dropped because any modifier made the handler require the pressed key to be listed; key filtering now applies only
+    to modifiers that name a key.
+
+- Stop bundling `@lune-js/core` into `@lune-js/context`.
+  - `@lune-js/core` owns the reactive graph, so inlining it gave every consumer a second copy:
+    effects registered through a context never observed writes made through the `reactive` export,
+    and `lune-js` shipped two independent reactive systems.
+  - `@lune-js/core` moves to `dependencies`, since the built module now imports it instead of carrying its own copy.
+  - Drops the `lune-js` ESM bundle from ~157kb to ~115kb (~41kb to ~31kb gzipped).
+  - The `import.meta.env.DEV` define is now scoped to the CJS output, which is the one that needed it,
+    so development warnings survive in the published ESM module.
+
 ## [0.3.0] - 2026-08-05
 
 ### Added

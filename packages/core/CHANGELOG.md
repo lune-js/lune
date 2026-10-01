@@ -1,5 +1,21 @@
 # @lune-js/core
 
+## 0.4.0
+
+### Minor Changes
+
+- Various patches, bundle optimization, and performance refactor.
+  - Fix directive bugs.
+  - Refactors dirty and mutable checks in `system.ts`.
+  - Stop bundling `@lune-js/core` into `@lune-js/context`.
+
+### Patch Changes
+
+- Refactors dirty and mutable checks in `system.ts`.
+  - Removes `checkDirty` function that existed only to walk down through `Mutable` nodes.
+  - Refactors `propagate`'s descent, traversal stacks, and labeled loop.
+  - Patches dirty checks in `effect.ts` and removes unlink/subscriptions.
+
 ## [0.3.0] - 2026-08-05
 
 ### Added
