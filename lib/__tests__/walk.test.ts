@@ -380,6 +380,15 @@ describe("walk", () => {
     expect(span?.textContent).toBe("DIV");
   });
 
+  it("should keep walking when a lu-scope expression fails", () => {
+    container.innerHTML = '<div lu-scope="Missing()"><span>{{ message }}</span></div>';
+
+    ctx.scope.message = "Hello";
+
+    expect(() => walk(container, ctx)).not.toThrow();
+    expect(container.innerHTML).toContain("Hello");
+  });
+
   it("should handle lu-scope with empty expression", () => {
     container.innerHTML = '<div lu-scope=""><span>{{ $root.tagName }}</span></div>';
 

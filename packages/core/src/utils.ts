@@ -99,7 +99,7 @@ export function makeMap(str: string): (key: string) => boolean {
 }
 
 /**
- * Returns the raw, original object of a Vue-created proxy.
+ * Returns the raw, original object of a Lune-created proxy.
  *
  * `toRaw()` can return the original object from proxies created by
  * {@link reactive}, {@link readonly}, {@link shallowReactive} or
