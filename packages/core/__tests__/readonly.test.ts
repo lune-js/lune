@@ -147,7 +147,7 @@ describe("readonly", () => {
     });
   });
 
-  // * Collections such as Maps and Sets are not supported in Lune.js
+  // * Collections such as Maps and Sets are not supported in Lune.
 
   test("calling reactive on an readonly should return readonly", () => {
     const a = readonly({});

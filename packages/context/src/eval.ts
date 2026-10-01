@@ -43,10 +43,11 @@ export function execute(scope: any, exp: string, el?: Node): any {
 
 function toFunction(exp: string): Function {
   try {
+    // * Added expression engine in v1.0.0. Keeping comments below for context.
     // ! High Risk: Implied eval. Do not use the Function constructor to create functions.
     // TODO: `with` is deprecated https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with
     // ? https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with#avoiding_the_with_statement_by_using_an_iife
-    // oxlint-disable-next-line typescript/no-implied-eval
+    // oxlint-disable-next-line
     return new Function(`$data`, `$el`, `with($data){${exp}}`);
   } catch (e) {
     if (import.meta.env.DEV) {

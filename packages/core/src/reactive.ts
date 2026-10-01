@@ -51,6 +51,7 @@ function createReactiveObject(
  * or mutated. Delegates proxy traps to specialized mutable handlers.
  * @param target - The source object or array to observe.
  * @returns A reactive proxy wrapping the target object.
+ * @see {@link http://lune-js.com/guide/reactivity#reactive-object}
  */
 export function reactive<T extends object>(target: T): Reactive<T>;
 /*@__NO_SIDE_EFFECTS__*/
@@ -66,6 +67,7 @@ export function reactive(target: object) {
  * Nested objects inside the properties remain un-proxied raw values.
  * @param target - The source object or array.
  * @returns A shallow reactive proxy.
+ * @see {@link http://lune-js.com/guide/reactivity#shallowreactive-object-shallowreadonly-object}
  */
 /*@__NO_SIDE_EFFECTS__*/
 export function shallowReactive<T extends object>(target: T): T {
@@ -77,6 +79,7 @@ export function shallowReactive<T extends object>(target: T): T {
  * mutations emit warnings in development mode and fail gracefully.
  * @param target - The source object to make read-only.
  * @returns A deeply immutable and reactive proxy window.
+ * @see {@link http://lune-js.com/guide/reactivity#readonly-object}
  */
 /*@__NO_SIDE_EFFECTS__*/
 export function readonly<T extends object>(target: T): DeepReadonly<Reactive<T>> {
@@ -111,7 +114,7 @@ export function readonly<T extends object>(target: T): DeepReadonly<Reactive<T>>
  * ```
  *
  * @param target - The source object.
- * @see {@link https://vuejs.org/api/reactivity-advanced.html#shallowreadonly}
+ * @see {@link http://lune-js.com/guide/reactivity#shallowreactive-object-shallowreadonly-object}
  */
 /*@__NO_SIDE_EFFECTS__*/
 export function shallowReadonly<T extends object>(target: T): Readonly<T> {

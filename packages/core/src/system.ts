@@ -1,16 +1,12 @@
-// oxlint-disable no-constant-condition
 // Ported from alien-signals. Diff against upstream main:
 // https://github.com/stackblitz/alien-signals/compare/7e53655f40c3dd298168c278b3bf248a72f742d9...main
-// ! Removed from original: `./computed.js` and `./effectScope.js`
+// ! Removed from original: `./computed.js` and `./effectScope.js`.
+// Upstream's multi-level machinery (`checkDirty`, the traversal stacks and
+// the `dep.deps` cascade in `unlink`) has been dropped rather than left unreachable.
 import { warn } from "@lune-js/utils";
 import { SystemFlags } from "./constants";
 import type { ReactiveEffect as Effect } from "./effect";
 import type { Link, ReactiveNode } from "./types";
-
-interface Stack<T> {
-  value: T;
-  prev: Stack<T> | undefined;
-}
 
 const notifyBuffer: (Effect | undefined)[] = [];
 
@@ -122,76 +118,53 @@ export function unlink(link: Link, sub: ReactiveNode = link.sub): Link | undefin
   }
   if (prevSub !== undefined) {
     prevSub.nextSub = nextSub;
-  } else if ((dep.subs = nextSub) === undefined) {
-    let toRemove = dep.deps;
-    if (toRemove !== undefined) {
-      do {
-        toRemove = unlink(toRemove, dep);
-      } while (toRemove !== undefined);
-      dep.flags |= SystemFlags.Dirty;
-    }
+  } else {
+    // `Dep` drops itself from its target's key map when this is set to undefined
+    dep.subs = nextSub;
   }
   return nextDep;
 }
 
+/**
+ * Walks the subscribers of a changed dependency, marking each one pending and queueing it for
+ * the next flush. A subscriber that is already queued, or that is only re-entering itself from
+ * inside its own run, is marked but not queued.
+ */
 export function propagate(link: Link): void {
-  let next = link.nextSub;
-  let stack: Stack<Link | undefined> | undefined;
-
-  top: do {
+  do {
     const sub = link.sub;
-    let flags = sub.flags;
+    const nextSub = link.nextSub;
+    const flags = sub.flags;
 
-    if (flags & (SystemFlags.Mutable | SystemFlags.Watching)) {
+    if (flags & SystemFlags.Watching) {
+      let notify = true;
+
       if (!(flags & (SystemFlags.RecursedCheck | SystemFlags.Recursed | SystemFlags.Dirty | SystemFlags.Pending))) {
         sub.flags = flags | SystemFlags.Pending;
         if (runDepth) {
           sub.flags |= SystemFlags.Recursed;
         }
       } else if (!(flags & (SystemFlags.RecursedCheck | SystemFlags.Recursed))) {
-        flags = SystemFlags.None;
+        // already queued by an earlier trigger in this batch
+        notify = false;
       } else if (!(flags & SystemFlags.RecursedCheck)) {
         sub.flags = (flags & ~SystemFlags.Recursed) | SystemFlags.Pending;
       } else if (!(flags & (SystemFlags.Dirty | SystemFlags.Pending)) && isValidLink(link, sub)) {
+        // the subscriber wrote to one of its own dependencies while running: flag it so `run`
+        // can decide whether to re-enter, but never queue it from here
         sub.flags = flags | SystemFlags.Recursed | SystemFlags.Pending;
-        flags &= SystemFlags.Mutable;
+        notify = false;
       } else {
-        flags = SystemFlags.None;
+        notify = false;
       }
 
-      if (flags & SystemFlags.Watching) {
+      if (notify) {
         notifyBuffer[notifyBufferLength++] = sub as Effect;
       }
-
-      if (flags & SystemFlags.Mutable) {
-        const subSubs = sub.subs;
-        if (subSubs !== undefined) {
-          link = subSubs;
-          if (subSubs.nextSub !== undefined) {
-            stack = { value: next, prev: stack };
-            next = link.nextSub;
-          }
-          continue;
-        }
-      }
     }
 
-    if ((link = next!) !== undefined) {
-      next = link.nextSub;
-      continue;
-    }
-
-    while (stack !== undefined) {
-      link = stack.value!;
-      stack = stack.prev;
-      if (link !== undefined) {
-        next = link.nextSub;
-        continue top;
-      }
-    }
-
-    break;
-  } while (true);
+    link = nextSub!;
+  } while (link !== undefined);
 }
 
 export function startTracking(sub: ReactiveNode): ReactiveNode | undefined {
@@ -204,7 +177,7 @@ export function startTracking(sub: ReactiveNode): ReactiveNode | undefined {
 
 export function endTracking(sub: ReactiveNode, prevSub: ReactiveNode | undefined): void {
   if (import.meta.env.DEV && activeSub !== sub) {
-    warn("Active effect was not restored correctly - this is likely a Lune.js internal bug.");
+    warn("Active effect was not restored correctly - this is likely a internal bug in Lune.");
   }
   activeSub = prevSub;
 
@@ -224,53 +197,6 @@ function flush(): void {
   }
   notifyIndex = 0;
   notifyBufferLength = 0;
-}
-
-export function checkDirty(link: Link, sub: ReactiveNode): boolean {
-  let stack: Stack<Link> | undefined;
-  let checkDepth = 0;
-
-  top: do {
-    const dep = link.dep;
-    const depFlags = dep.flags;
-
-    let dirty = false;
-
-    if (sub.flags & SystemFlags.Dirty) {
-      dirty = true;
-    } else if (
-      (depFlags & (SystemFlags.Mutable | SystemFlags.Pending)) ===
-      (SystemFlags.Mutable | SystemFlags.Pending)
-    ) {
-      stack = { value: link, prev: stack };
-      link = dep.deps!;
-      sub = dep;
-      ++checkDepth;
-      continue;
-    }
-
-    if (!dirty && link.nextDep !== undefined) {
-      link = link.nextDep;
-      continue;
-    }
-
-    while (checkDepth) {
-      --checkDepth;
-      link = stack!.value;
-      stack = stack!.prev;
-      if (!dirty) {
-        sub.flags &= ~SystemFlags.Pending;
-      }
-      sub = link.sub;
-      if (link.nextDep !== undefined) {
-        link = link.nextDep;
-        continue top;
-      }
-      dirty = false;
-    }
-
-    return dirty && !!sub.flags;
-  } while (true);
 }
 
 export function shallowPropagate(link: Link): void {
